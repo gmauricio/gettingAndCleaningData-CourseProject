@@ -7,9 +7,9 @@
 
 ## Description of final_data.txt
 
-Dimensions: 180 x 66
-Each row represent a feature extracted from features.txt, only mean and standar deviation calculations are included
-Each column represents a subject or an activity for the measurement.
+* Dimensions: 180 x 66
+* Each row represent a feature extracted from features.txt, only mean and standar deviation calculations are included
+* Each column represents a subject or an activity for the measurement.
 
 ### Variables for each row:
 
