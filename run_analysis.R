@@ -38,8 +38,8 @@ extracted_data$activity <- mapvalues(extracted_data$activity, from=activity_labe
 data_by_subject <- split(extracted_data, extracted_data$subject)
 data_by_activity <- split(extracted_data, extracted_data$activity)
 #averages of variables by subject and activity
-avg_by_subject <- sapply(data_by_subject, function(x) colMeans(x[, cols_to_extract]))
-avg_by_activity <- sapply(data_by_activity, function(x) colMeans(x[, cols_to_extract]))
+avg_by_subject <- sapply(data_by_subject, function(x) colMeans(x[, variables]))
+avg_by_activity <- sapply(data_by_activity, function(x) colMeans(x[, variables]))
 
 #finally the tidy dataset, with the average of each variable for each activity and each subject.
 final_data = cbind(avg_by_subject, avg_by_activity)
