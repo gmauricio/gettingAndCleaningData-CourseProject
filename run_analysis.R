@@ -14,32 +14,26 @@ subject_train <- read.table('UCI HAR Dataset/train/subject_train.txt', col.names
 x_train <- read.table('UCI HAR Dataset/train/X_train.txt', col.names=features$name)
 y_train <- read.table('UCI HAR Dataset/train/y_train.txt', col.names='activity')
 
-train_data = cbind(subject_train, y_train, x_train)
+train_data <- cbind(subject_train, y_train, x_train)
 
 # Merge of training and test data
-complete_data = rbind(test_data, train_data)
+complete_data <- rbind(test_data, train_data)
 
 #Regex to identify col names with means and stds
-mean_std_regex ="\\mean\\.\\.|std\\.\\."
-variables = colnames(complete_data)[grep(mean_std_regex, names)]
+mean_std_regex <- "\\mean\\.\\.|std\\.\\."
+variables <- colnames(complete_data)[grep(mean_std_regex, names(complete_data))]
 
 #new data set with measurements on the mean and standard deviation
-extracted_data = data[,c('subject', 'activity', variables)]
+extracted_data <- complete_data[,c('subject', 'activity', variables)]
 
 #Replaces the activities codes with their descriptive names
+library(plyr)
 extracted_data$activity <- mapvalues(extracted_data$activity, from=activity_labels$number, to=as.character(activity_labels$label))
 
-#Split the data into data frames by subject and activity
-#data_by_subject_and_activity <- split(extracted_data, list(extracted_data$subject, extracted_data$activity))
+#Groups the data by subject and activity
+grouped_data <- group_by(extracted_data, subject, activity)
 
-#final_data <- sapply(data_by_subject_and_activity, function(x) colMeans(x[, cols_to_extract]))
+#Calculates the mean for each variable for each subject and activity
+final_data <- summarise_each(grouped_data, funs(mean))
 
-#Split the data into data frames by subject and activity
-data_by_subject <- split(extracted_data, extracted_data$subject)
-data_by_activity <- split(extracted_data, extracted_data$activity)
-#averages of variables by subject and activity
-avg_by_subject <- sapply(data_by_subject, function(x) colMeans(x[, variables]))
-avg_by_activity <- sapply(data_by_activity, function(x) colMeans(x[, variables]))
-
-#finally the tidy dataset, with the average of each variable for each activity and each subject.
-final_data = cbind(avg_by_subject, avg_by_activity)
+write.table(final_data, 'final_data.txt', row.names=FALSE)
