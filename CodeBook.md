@@ -3,22 +3,23 @@
 ## Creating the tidy data file
 
 1. Clone the content of this repo
-2. Source run_analysys.R, it will leave a final_data variable in your global environment
+2. Source run_analysys.R, it will create a file called final_data.txt in the workspace.
 
 ## Description of final_data.txt
 
-* Dimensions: 180 x 66
-* Each row represent a feature extracted from features.txt, only mean and standar deviation calculations are included
-* Each column represents a subject or an activity for the measurement.
+* Dimensions: 180 x 68
+* Each row contains a measurement with subject, activity, and the mean for every variable from features
 
-### Variables for each row:
+### Variables:
 
-* tBodyAcc.mean...X"
+* "Subject" : The number of the subject
+* "Activtiy": A description of the activity that the subject was doing while measuring.
+* "tBodyAcc.mean...X"
 * "tBodyAcc.mean...Y"
 * "tBodyAcc.mean...Z"
 * "tBodyAcc.std...X"
-*  "tBodyAcc.std...Y"
-*  "tBodyAcc.std...Z"
+* "tBodyAcc.std...Y"
+* "tBodyAcc.std...Z"
 * "tGravityAcc.mean...X"
 * "tGravityAcc.mean...Y"
 * "tGravityAcc.mean...Z"
@@ -81,10 +82,4 @@
 * "fBodyBodyGyroJerkMag.std.."
 
 #### Notes:
-* Each value is normalized and bounded within [-1,1].
-
-### Variables for each column
-
-* The first 30 columns from 1 to 30 refer to subjects
-* The next 6 columns refer to the different activities used for the measurements
-* The values on the columns refer to averages of the variables described by rows
+* Each value is normalized and bounded within [-1,1], and represent a summarized mean of means and standard deviations
